@@ -52,7 +52,7 @@ const viewFilesOfUser = async (req, res) => {
     let userEmail = req.params.email;
 
     try {
-        let response = await Message.find({ email: userEmail });
+        let response = await FileUpload.find({ email: userEmail });
         if (response) {
             return res.status(200).send({data:response });
         } else {
