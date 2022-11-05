@@ -25,13 +25,13 @@ const register = async (req, res) => {
     try {
         let response = await user.save();
         if (response) {
-            return res.json({ message: 'New User registered' });
+            return res.status(201).send({ data: 'New User registered' });
         } else {
-            return res.status(500).send({ message: 'Internal server error' });
+            return res.status(500).send({ data: 'Internal server error' });
         }
     } catch (err) {
         console.log(err);
-        return res.status(400).send({ message: 'Registration Error !!' })
+        return res.status(400).send({ data: 'Registration Error !!' })
     }
 
 }
@@ -48,16 +48,16 @@ const login = async (req, res) => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = auth.generateAccessToken(email);
                 // call toJSON method applied during model instantiation
-                return res.json({...user.toJSON(), token});
+                return res.status(200).send({ ...user.toJSON(), token });
             }
             else {
-                return res.status(400).send({ message: 'Incorrect Credentials' })
+                return res.status(400).send({ data: 'Incorrect Credentials' })
             }
         } else {
-            return res.status(404).send({ message: 'Such user does not exist' });
+            return res.status(404).send({ data: 'Such user does not exist' });
         }
     } catch (err) {
-        return res.status(400).send({ message: 'Such user does not exist check your credentials' })
+        return res.status(400).send({ data: 'Such user does not exist check your credentials' })
     }
 
 }
@@ -69,12 +69,12 @@ const getAllUsers = async (req, res) => {
         let users = await User.find();
         if (users) {
             // return res.json(users)
-            return res.status(200).send(users)
+            return res.status(200).send({data:users})
         } else {
-            return res.status(404).send({ message: 'No users available' });
+            return res.status(404).send({ data: 'No users available' });
         }
     } catch (err) {
-        return res.status(500).send({ message: 'Internal server error' })
+        return res.status(500).send({ data: 'Internal server error' })
     }
 }
 

@@ -33,13 +33,13 @@ connection.once("open", () => {
     console.log("Mongodb Connection success!");
 })
 
-// auth.authenticateToken.unless = unless
-// app.use(auth.authenticateToken.unless({
-//     path: [
-//         { url: '/api/v1/users/login', methods: ['POST'] },
-//         { url: '/api/v1/users/register', methods: ['POST'] }
-//     ]
-// }))
+auth.authenticateToken.unless = unless
+app.use(auth.authenticateToken.unless({
+    path: [
+        { url: '/api/v1/users/login', methods: ['POST'] },
+        { url: '/api/v1/users/register', methods: ['POST'] }
+    ]
+}))
 
 //user route
 let users = require('./src/routes/UserRoutes')

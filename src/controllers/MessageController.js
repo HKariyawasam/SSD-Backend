@@ -11,22 +11,23 @@ const createMessage = async (req, res) => {
     const description = req.body.description;
     const email = req.body.email;
 
-    const user = new Message({
+    const message = new Message({
         id,
         description,
         email
     })
 
+
     try {
-        let response = await user.save();
+        let response = await message.save();
         if (response) {
-            return res.json({ message: 'New User registered' });
+            return res.status(201).send({ data: 'New Message saved successfully' });
         } else {
-            return res.status(500).send({ message: 'Internal server error' });
+            return res.status(500).send({ data: 'Internal server error' });
         }
     } catch (err) {
         console.log(err);
-        return res.status(400).send({ message: 'Registration Error !!' })
+        return res.status(400).send({ data: 'Server Error !!' })
     }
 
 }
@@ -37,12 +38,12 @@ const getAllMessages = async (req, res) => {
     try {
         let messages = await Message.find();
         if (messages) {
-            return res.status(200).send(messages)
+            return res.status(200).send({data: messages})
         } else {
-            return res.status(404).send({ message: 'No messages available' });
+            return res.status(404).send({ data: 'No messages available' });
         }
     } catch (err) {
-        return res.status(500).send({ message: 'Internal server error' })
+        return res.status(500).send({ data: 'Internal server error' })
     }
 }
 
@@ -53,12 +54,12 @@ const viewMessagesOfUser = async (req, res) => {
     try {
         let response = await Message.find({ email: userEmail });
         if (response) {
-            return res.json({response});
+            return res.status(200).send({data:response });
         } else {
-            return res.status(404).send({ message: 'Not Found' });
+            return res.status(404).send({ data: 'Not Found' });
         }
     } catch (err) {
-        return res.status(500).send({ message: 'Internal server error' });
+        return res.status(500).send({ data: 'Internal server error' });
     }
 }
 

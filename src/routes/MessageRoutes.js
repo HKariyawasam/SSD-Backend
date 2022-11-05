@@ -4,7 +4,7 @@ const router = express.Router();
 
 let messageController = require('../controllers/MessageController')
 
-router.post('/create', messageController.createMessage);
+router.post('/', messageController.createMessage);
 router.get('/', messageController.getAllMessages);
 router.get('/:email', messageController.viewMessagesOfUser);
 
