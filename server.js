@@ -49,3 +49,7 @@ app.use(errors.errorHandler);
 //message route
 let messages = require('./src/routes/MessageRoutes')
 app.use('/api/v1/messages', messages);
+
+//filesuplaod route
+let files = require('./src/routes/FileUploadRoutes')
+app.use('/api/v1/files', files);
