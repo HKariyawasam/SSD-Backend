@@ -7,16 +7,16 @@ const unless = require('express-unless')
 const auth = require('./src/middleware/jwt')
 const errors = require('./src/middleware/errorHandler')
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 const URL = process.env.URL;
 
 app.use(express.urlencoded({ extended: false }))
 app.use(cors({ // enables CORS 
-    credentials: true, 
-    origin: true, 
-    methods: ['GET','POST','PUT','DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization'] 
-  }));
+    credentials: true,
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 mongoose.connect(URL, {

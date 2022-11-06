@@ -10,7 +10,7 @@ const register = async (req, res) => {
     const email = req.body.email;
     const pwd = req.body.password;
     const type = req.body.type;
-   
+
     const salt = bcrypt.genSaltSync(10);
     const password = bcrypt.hashSync(pwd, salt);
 
@@ -69,7 +69,7 @@ const getAllUsers = async (req, res) => {
         let users = await User.find();
         if (users) {
             // return res.json(users)
-            return res.status(200).send({data:users})
+            return res.status(200).send({ data: users })
         } else {
             return res.status(404).send({ data: 'No users available' });
         }
