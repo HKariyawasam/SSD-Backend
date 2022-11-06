@@ -6,25 +6,36 @@ const app = express();
 const unless = require('express-unless')
 const auth = require('./src/middleware/jwt')
 const errors = require('./src/middleware/errorHandler')
+const https = require('https')
+const path = require('path')
+const fs = require('fs')
 
 const port = process.env.PORT;
 const URL = process.env.URL;
 
 app.use(express.urlencoded({ extended: false }))
-app.use(cors({ // enables CORS 
-    credentials: true,
-    origin: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 app.use(express.json());
+// app.use('/',(req,res,next)=>{
+//     res.send("Send Hello from Server")
+// })
 
 mongoose.connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
-const server = app.listen(port, () => {
+// const server = app.listen(port, () => {
+    
+//     console.log(`Server Is Running on Port: ${port}`);
+// });
+
+const sslServer = https.createServer({
+    key:fs.readFileSync(path.join(__dirname,'./CA/localhost/','localhost.decrypted.key')),
+    cert:fs.readFileSync(path.join(__dirname,'./CA/localhost/','localhost.crt')),
+},app)
+
+const server = sslServer.listen(port, () => {   
     console.log(`Server Is Running on Port: ${port}`);
 });
 
