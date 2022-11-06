@@ -4,7 +4,7 @@ const auth = require('../middleware/jwt')
 const User = require('../models/User')
 
 const register = async (req, res) => {
-
+console.log("request ", req)
     const name = req.body.name;
     const phone = req.body.phone;
     const email = req.body.email;
